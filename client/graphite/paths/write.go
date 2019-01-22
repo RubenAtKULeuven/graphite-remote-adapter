@@ -84,6 +84,17 @@ func templatedPaths(m model.Metric, rules []*config.Rule, templateData map[strin
 	return paths, stop, err
 }
 
+/*
+* This function replaces all illegal characters in graphite metric names with valid ones
+ */
+func sanitize(metric string) string {
+	metric = strings.Replace(metric, "%20", "_", -1) // Replace illegal characters
+	metric = strings.Replace(metric, "%2F", "_", -1)
+	metric = strings.Replace(metric, "%2E", "_", -1)
+
+	return metric
+}
+
 func defaultPath(m model.Metric, format Format, prefix string) string {
 	var buffer bytes.Buffer
 	var lbuffer bytes.Buffer
@@ -105,14 +116,10 @@ func defaultPath(m model.Metric, format Format, prefix string) string {
 		}
 
 		k := string(l)
-		k = strings.Replace(k, "/", "_", -1) // Replace illegal characters
-		k = strings.Replace(k, " ", "_", -1)
-		k = strings.Replace(k, "%20", "_", -1)
+		k = sanitize(k)
 
 		v := graphite_tmpl.Escape(string(m[l]))
-		v = strings.Replace(v, "/", "_", -1) // Replace illegal characters
-		v = strings.Replace(v, " ", "_", -1)
-		v = strings.Replace(v, "%20", "_", -1)
+		v = sanitize(v)
 
 		if format == FormatCarbonOpenMetrics {
 			// https://github.com/RichiH/OpenMetrics/blob/master/metric_exposition_format.md
