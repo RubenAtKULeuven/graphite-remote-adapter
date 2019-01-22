@@ -28,7 +28,7 @@ func ToDatapoints(s *model.Sample, format Format, prefix string, rules []*config
 
 	datapoints := []string{}
 	for _, path := range paths {
-		datapoints = append(datapoints, fmt.Sprintf("%s %f %.0f\n", path, v, ".test", t))
+		datapoints = append(datapoints, fmt.Sprintf("%s.test %f %.0f\n", path, v, t))
 	}
 	return datapoints, nil
 }
