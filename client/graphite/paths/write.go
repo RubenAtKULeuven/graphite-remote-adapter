@@ -108,9 +108,11 @@ func defaultPath(m model.Metric, format Format, prefix string) string {
 		k = strings.Replace(k, "/", "_", -1) // Replace illegal characters
 		k = strings.Replace(k, " ", "_", -1)
 		k = strings.Replace(k, "%20", "_", -1)
-		k = k + ".anothertest"
 
 		v := graphite_tmpl.Escape(string(m[l]))
+		v = strings.Replace(v, "/", "_", -1) // Replace illegal characters
+		v = strings.Replace(v, " ", "_", -1)
+		v = strings.Replace(v, "%20", "_", -1)
 
 		if format == FormatCarbonOpenMetrics {
 			// https://github.com/RichiH/OpenMetrics/blob/master/metric_exposition_format.md
