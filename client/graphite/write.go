@@ -68,7 +68,6 @@ func (c *Client) prepareWrite(samples model.Samples, r *http.Request) ([]*bytes.
 		"num_samples", len(samples), "storage", c.Name(), "msg", "Remote write")
 
 	graphitePrefix, err := c.getGraphitePrefix(r)
-	graphitePrefix = graphitePrefix + ".test"
 	if err != nil {
 		level.Warn(c.logger).Log("prefix", graphitePrefix, "err", err)
 		return nil, err
