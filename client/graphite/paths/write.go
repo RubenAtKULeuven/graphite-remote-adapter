@@ -106,6 +106,8 @@ func defaultPath(m model.Metric, format Format, prefix string) string {
 
 		k := string(l)
 		k = strings.Replace(k, "/", "_", -1) // Replace illegal characters
+		k = strings.Replace(k, " ", "_", -1)
+		k = strings.Replace(k, "%20", "_", -1)
 
 		v := graphite_tmpl.Escape(string(m[l]))
 
