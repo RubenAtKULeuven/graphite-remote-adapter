@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"sort"
+	"strings"
 
 	"github.com/criteo/graphite-remote-adapter/client/graphite/config"
 	graphite_tmpl "github.com/criteo/graphite-remote-adapter/client/graphite/template"
@@ -28,7 +29,7 @@ func ToDatapoints(s *model.Sample, format Format, prefix string, rules []*config
 
 	datapoints := []string{}
 	for _, path := range paths {
-		datapoints = append(datapoints, fmt.Sprintf("%s.test %f %.0f\n", path, v, t))
+		datapoints = append(datapoints, fmt.Sprintf("%s %f %.0f\n", path, v, t))
 	}
 	return datapoints, nil
 }
@@ -104,6 +105,8 @@ func defaultPath(m model.Metric, format Format, prefix string) string {
 		}
 
 		k := string(l)
+		k = strings.Replace(k, "/", "_", -1) // Replace illegal characters
+
 		v := graphite_tmpl.Escape(string(m[l]))
 
 		if format == FormatCarbonOpenMetrics {
