@@ -51,6 +51,7 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 	// Prepare the url to fetch
 	queryStr := graphitePrefix + name + ".**"
 	expandURL, err := prepareURL(c.cfg.Read.URL, expandEndpoint, map[string]string{"format": "json", "leavesOnly": "1", "query": queryStr})
+	level.Info(c.logger).Log("graphite_web", c.cfg.Read.URL, "path", expandEndpoint)
 	if err != nil {
 		level.Warn(c.logger).Log(
 			"graphite_web", c.cfg.Read.URL, "path", expandEndpoint,
