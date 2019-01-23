@@ -68,6 +68,7 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 		return nil, err
 	}
 
+	level.Info(c.logger).Log(body)
 	err = json.Unmarshal(body, &expandResponse)
 	if err != nil {
 		level.Warn(c.logger).Log(
