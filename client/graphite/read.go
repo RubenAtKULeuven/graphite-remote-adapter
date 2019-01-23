@@ -49,7 +49,7 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 	}
 
 	// Prepare the url to fetch
-	queryStr := graphitePrefix + name + ".*.**"
+	queryStr := graphitePrefix + name + ".**"
 	expandURL, err := prepareURL(c.cfg.Read.URL, expandEndpoint, map[string]string{"format": "json", "leavesOnly": "1", "query": queryStr})
 	level.Info(c.logger).Log("graphite_web", c.cfg.Read.URL, "path", expandEndpoint)
 	if err != nil {
@@ -60,16 +60,16 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 	}
 
 	// Get the list of targets
-	expandResponse := ExpandResponse{}
+	//expandResponse := ExpandResponse{}
+	var data []map[string]interface{}
 	body, err := fetchURL(ctx, c.logger, expandURL)
-	level.Info(c.logger).Log("body", body)
 	if err != nil {
 		level.Warn(c.logger).Log(
 			"url", expandURL, "err", err, "msg", "Error fetching URL")
 		return nil, err
 	}
 
-	err = json.Unmarshal(body, &expandResponse)
+	err = json.Unmarshal(body, &data)
 	if err != nil {
 		level.Warn(c.logger).Log(
 			"url", expandURL, "err", err,
@@ -77,7 +77,7 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 		return nil, err
 	}
 
-	targets, err := c.filterTargets(query, expandResponse.Results, graphitePrefix)
+	targets, err := c.filterTargets(query, data, graphitePrefix)
 	return targets, err
 }
 
