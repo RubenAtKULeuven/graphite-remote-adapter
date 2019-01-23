@@ -64,7 +64,7 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 	// Get the list of targets
 	expandResponse := ExpandResponse{}
 	//level.Info(c.logger).Log("message", "Logging test3")
-	//body, err := fetchURL(ctx, c.logger, expandURL)
+	body, err := fetchURL(ctx, c.logger, expandURL)
 	level.Info(c.logger).Log("body", body)
 	if err != nil {
 		level.Warn(c.logger).Log(
