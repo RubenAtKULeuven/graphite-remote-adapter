@@ -77,7 +77,7 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 		return nil, err
 	}
 
-	mock_data := [2]string{"{\"allowChildren\":1,\"expandable\":1,\"leaf\":0,\"id\":\"development.applications.prometheus.container_cpu_load_average_10s.container_label_build_date\",\"text\":\"container_label_build_date\",\"context\":{}}", "{\"allowChildren\":1,\"expandable\":1,\"leaf\":0,\"id\":\"development.applications.prometheus.container_cpu_load_average_10s.container_label_maintainer\",\"text\":\"container_label_maintainer\",\"context\":{}}"}
+	mock_data := []string{"{\"allowChildren\":1,\"expandable\":1,\"leaf\":0,\"id\":\"development.applications.prometheus.container_cpu_load_average_10s.container_label_build_date\",\"text\":\"container_label_build_date\",\"context\":{}}", "{\"allowChildren\":1,\"expandable\":1,\"leaf\":0,\"id\":\"development.applications.prometheus.container_cpu_load_average_10s.container_label_maintainer\",\"text\":\"container_label_maintainer\",\"context\":{}}"}
 	targets, err := c.filterTargets(query, mock_data, graphitePrefix)
 	return targets, err
 }
