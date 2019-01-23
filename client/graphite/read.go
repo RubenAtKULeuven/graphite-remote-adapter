@@ -52,7 +52,7 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 	queryStr := graphitePrefix + name + ".**"
 	expandURL, err := prepareURL(c.cfg.Read.URL, expandEndpoint, map[string]string{"format": "json", "leavesOnly": "1", "query": queryStr})
 	level.Info(c.logger).Log("graphite_web", c.cfg.Read.URL, "path", expandEndpoint)
-	level.Info(c.logger).Log("message", "Logging test")
+	//level.Info(c.logger).Log("message", "Logging test")
 	if err != nil {
 		level.Warn(c.logger).Log(
 			"graphite_web", c.cfg.Read.URL, "path", expandEndpoint,
@@ -60,11 +60,11 @@ func (c *Client) queryToTargets(ctx context.Context, query *prompb.Query, graphi
 		return nil, err
 	}
 
-	level.Info(c.logger).Log("message", "Logging test2")
+	//level.Info(c.logger).Log("message", "Logging test2")
 	// Get the list of targets
 	expandResponse := ExpandResponse{}
-	level.Info(c.logger).Log("message", "Logging test3")
-	body, err := fetchURL(ctx, c.logger, expandURL)
+	//level.Info(c.logger).Log("message", "Logging test3")
+	//body, err := fetchURL(ctx, c.logger, expandURL)
 	level.Info(c.logger).Log("body", body)
 	if err != nil {
 		level.Warn(c.logger).Log(
