@@ -32,7 +32,7 @@ import (
 )
 
 const (
-	expandEndpoint  = "/metrics/expand"
+	expandEndpoint  = "/metrics/find"
 	renderEndpoint  = "/render/"
 	maxFetchWorkers = 10
 )
